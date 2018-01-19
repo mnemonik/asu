@@ -4,12 +4,13 @@ TEMPLATE = app
 
 TARGET = test_codepage
 
-QT       += core
-QT       -= gui
+CONFIG += console
+CONFIG += qt
+QT     += core
 
-CONFIG   += console
-CONFIG   -= app_bundle
 
 SOURCES += main.cpp
+
+message($${CONFIG})
 
 include(../../_install.pri)

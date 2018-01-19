@@ -1,7 +1,8 @@
 #ifndef WPMSERVICE_H
 #define WPMSERVICE_H
 
-#include <QCoreApplication>
+//#include <QCoreApplication>
+/*
 #include "resources.h"
 #include "config.h"
 #include "core.h"
@@ -83,5 +84,6 @@ private:
 };
 
 };
+*/
 
 #endif // WPMSERVICE_H

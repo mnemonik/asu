@@ -1,4 +1,4 @@
-#include <QTextCodec>
+/*#include <QTextCodec>
 #include <QFile>
 #include <QFileInfo>
 #include <QTextStream>
@@ -6,7 +6,7 @@
 #include <QThread>
 #include <QCoreApplication>
 #include <QFileInfo>
-
+/*
 #include "wpmapp.h"
 #include "common.h"
 #include "runthread.h"

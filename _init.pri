@@ -15,34 +15,38 @@ ASU_INSTALL_APPS = $${PWD}/_bin/
 CONFIG -= debug_and_release
 CONFIG -= debug_and_release_target
 CONFIG -= build_all
-#CONFIG -= lex
-#CONFIG -= yacc
-#CONFIG -= exceptions
-#CONFIG -= depend_includepath
-#CONFIG -= testcase_targets
-#CONFIG -= import_plugins
-#CONFIG -= import_qpa_plugin
-#CONFIG -= rtti_off
-#CONFIG -= rtti
-#CONFIG -= incremental_off
-#CONFIG -= warn_on
-#CONFIG -= qt
-#CONFIG -= link_prl
-#CONFIG -= shared
-#CONFIG -= precompile_header
-#CONFIG -= no_plugin_manifest
-#CONFIG -= qpa
-#CONFIG -= mingw
-#CONFIG -= gcc
+CONFIG -= lex
+CONFIG -= yacc
+CONFIG -= exceptions
+CONFIG -= depend_includepath
+CONFIG -= testcase_targets
+CONFIG -= import_plugins
+CONFIG -= import_qpa_plugin
+CONFIG -= rtti_off
+CONFIG -= rtti
+CONFIG -= incremental_off
+CONFIG -= warn_on
+CONFIG -= qt
+CONFIG -= link_prl
+CONFIG -= shared
+CONFIG -= precompile_header
+CONFIG -= no_plugin_manifest
+CONFIG -= qpa
+CONFIG -= mingw
+CONFIG -= gcc
+CONFIG -= console
+CONFIG -= app_bundle
 #
 CONFIG += debug
 CONFIG -= release
 #
-CONFIG -= x86
-CONFIG += x86_64
+#CONFIG -= x86
+#CONFIG -= x86_64
 #
-CONFIG += windows
-CONFIG += silent
+CONFIG -= silent
+#
+QT -= gui core widgets
+#
 DEFINES -= UNICODE
 #
 windows: {
@@ -80,8 +84,6 @@ MOC_DIR		= $${_PRO_FILE_PWD_}/_/
 UI_DIR		= $${_PRO_FILE_PWD_}/_/
 RCC_DIR		= $${_PRO_FILE_PWD_}/_/
 OBJECTS_DIR	= $${_PRO_FILE_PWD_}/_/
-#
-QT -= gui core widgets
 #
 defineTest(write){
     val = $$1
