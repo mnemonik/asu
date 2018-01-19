@@ -1,0 +1,19 @@
+{
+    "tmpl":"app",
+	"id":4,
+ 	"name": "imp",
+	"version": "1.0.0.0",
+	"description": "IMP server",
+	"homepage": "http://172.16.3.40/imp",
+	"author": "eugene",
+	"license": "Apache-2.0",
+	"files":[
+        { "name":"libgcc_s_dw2-1.dll", "version":"5.4.0" },
+        { "name":"libwinpthread-1.dll", "version":"5.4.0" },
+        { "name":"libstdc++-6.dll", "version":"5.4.0" },
+        { "name":"icuin53.dll", "version":"5.4.0" },
+        { "name":"icuuc53.dll", "version":"5.4.0" },
+        { "name":"icudt53.dll", "version":"5.4.0" },
+        { "name":"imp.exe", "version":"1.0.0" },
+    ]
+}

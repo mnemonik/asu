@@ -1,0 +1,15 @@
+{
+    "tmpl":"apps",
+ 	"name": "asu",
+	"version": "1.0.0",
+	"description": "ASU apps server",
+    "homepage": "http://172.16.3.40",
+    "author": "ASU",
+	"license": "Apache-2.0",
+	"apps":[
+        { "id":1, "path":"updater/app.json" },
+        { "id":2, "path":"wpm/app.json" },
+        { "id":3, "path":"worker/app.json" },
+        { "id":4, "path":"imp/app.json" }
+    ]
+}

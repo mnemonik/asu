@@ -1,0 +1,174 @@
+<div>
+<h1>Основы работы с wpm - worker package manager в консоле</h1>
+<p>
+<h3>1) Регистрация wpm в системе</h3>
+<code>wpm --reg [-N=<SERVICENAME>] [-U=<USERNAME>] [-D=<APPDIR>] [-C=<CONFIG>]</code>
+<pre>
+При этом
+  <SERVICENAME> по умолчанию равен "wpm"
+  <USERNAME> по умолчанию равен "NT AUTHORITY\NetworkService"
+  <APPDIR> по умолчанию равен в текущем расположений wpm созданный каталог "apps"
+  <CONFIG> по умолчанию равен "wpm.conf" заполненный значениями по умолчанию
+    Обязательные значения для параметров в файле конфигурации
+      Центральное хранилище приложений
+      --url = pgsql://developer:cunt@172.16.3.44:5432/eWarehouse
+Регистрация сервиса обязательна это дает возможность обновляться сервису 
+и докладывать о работе на компьютере и т.д.
+</pre>
+</p><p>
+<h3>2) Запуск серсиса</h3>
+<code>wpm --start</code>
+</p><p>
+<h3>3) Проверка серсиса</h3>
+<code>wpm --status</code>
+</p><p>
+<h3>4) Список установленных приложений</h3>
+<code>wpm --list</code>
+</p><p>
+<h3>5) Список доступных приложений</h3>
+<code>wpm --list=*</code>
+</p><p>
+<h3>6) Устанавливаем программу <app></h3>
+<code>wpm --install=<app></code>
+</p><p>
+<h3>7) Запускаем программу <app></h3>
+<code>wpm --run=<app></code>
+</p>
+</div>
+
+
+
+
+<div>
+<h1>Основы работы программы с авторизацией</h1>
+<p>
+При запуске программы <app> командой:
+<code>wpm --run=<app></code>.
+Если программе нужна авторизация она через сервис авторизируется
+</p>
+<p>
+API в core.dll ???
+<code>svr_start(char*)</code> ???
+<code>svr_stop(char*)</code> ???
+<code>svr_restart(char*)</code> ???
+<code>svr_status(char*)</code> ???
+<code>uint svr_lasterror()</code>
+<code>char* svr_error(uint)</code>
+<code>bool svr_islogin()</code>
+<code>int svr_login(char*, char*)</code>
+<code>int svr_relogin(char*, char*)</code>
+<code>int svr_unlogin()</code>
+<div>
+struct app{
+  char* name;//Имя только латинские символы
+  char* title;//Название
+  int type;//Тип
+  int status;//Статус
+  char* depends;//Зависимости
+  char* about;//Описание
+  uint disk;//Размер на диске
+  uint size;//Полный размер
+}
+<code>app[]* svr_app_list(char*)</code>
+</div>
+<code>int svr_app_install(char*)</code>
+<code>int svr_app_uninstall(char*)</code>
+<code>int svr_app_erase(char*)</code>
+<code>int svr_app_check(char*)</code>
+<code>int svr_app_update(char*)</code>
+<code>int svr_app_run(char*)</code>
+</p>
+</div>
+
+
+
+
+<div>
+<h1>Структура базы данных</h1>
+<p>
+--
+CREATE SCHEMA wpm;
+--
+CREATE TABLE wpm.roles
+(
+  role integer NOT NULL,
+  role_name name NOT NULL,
+  role_apps integer[] DEFAULT '{}'::integer[],
+  role_platforms integer[] DEFAULT '{}'::integer[],
+  role_groups integer[] DEFAULT '{}'::integer[],
+  CONSTRAINT pk_wpm_roles PRIMARY KEY (role)
+);
+insert into wpm.roles values(0, 'NULL', '{}'::integer[], '{}'::integer[], '{}'::integer[]);
+insert into wpm.roles values(1, 'ALL', NULL, NULL, NULL);
+--
+CREATE TABLE wpm.platforms
+(
+  platform integer NOT NULL,
+  platform_type name NOT NULL,
+  platform_name name NOT NULL,
+  platform_arch name NOT NULL,
+  CONSTRAINT pk_wpm_platforms PRIMARY KEY (platform)
+);
+insert into wpm.platforms values(1, 'Windows', '7', 'i386');
+--
+CREATE TABLE wpm.groups
+(
+  group integer NOT NULL,
+  group_name name NOT NULL,
+  CONSTRAINT pk_wpm_groups PRIMARY KEY (group)
+);
+--
+CREATE TABLE wpm.apps
+(
+  app integer NOT NULL,
+  app_name name NOT NULL,
+  app_title name NOT NULL,
+  app_platform integer NOT NULL,
+  app_depend integer[] NOT NULL DEFAULT '{}'::integer[],
+  app_group integer DEFAULT NULL,
+  app_about text DEFAULT NULL,
+  CONSTRAINT pk_wpm_apps PRIMARY KEY (app),
+  CONSTRAINT fk_wpm_apps_platform FOREIGN KEY (app_platform)
+    REFERENCES wpm.platforms (platform) MATCH SIMPLE
+    ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT fk_wpm_apps_group FOREIGN KEY (app_group)
+    REFERENCES wpm.groups (group) MATCH SIMPLE
+    ON UPDATE CASCADE ON DELETE NO ACTION
+);
+insert into wpm.apps values(1, 'qt4', 'qt4 library', 1, '{}'::integer[]);
+insert into wpm.apps values(2, 'raw_planning', 'Планирование чего-то там', 1, '{1}'::integer[]);
+--
+CREATE TABLE wpm.builds
+(
+  build integer NOT NULL,
+  app integer NOT NULL,
+  version name NOT NULL,
+  files integer[] NOT NULL DEFAULT '{}'::integer[],
+  CONSTRAINT pk_wpm_builds PRIMARY KEY (build),
+);
+insert into wpm.builds values(1, 1, '0.0.0.0');
+insert into wpm.builds values(2, 2, '0.0.0.0');
+--
+CREATE TABLE wpm.files
+(
+  file integer NOT NULL,
+  file_path integer NOT NULL,
+  CONSTRAINT pk_wpm_files PRIMARY KEY (file),
+);
+insert into wpm.files values(1, 'QtCore4.dll');
+--
+CREATE TABLE wpm.users(
+  username name NOT NULL,
+  role integer NOT NULL,
+  app_install integer[] DEFAULT '{}'::integer[],
+  last_active timestamp without time zone, -- Последняя активность
+  CONSTRAINT pk_wpm_users PRIMARY KEY (username),
+  CONSTRAINT fk_wpm_users_role FOREIGN KEY (role)
+    REFERENCES wpm.roles (role) MATCH SIMPLE
+    ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT fk_wpm_users_username FOREIGN KEY (username)
+    REFERENCES meta.users (username) MATCH SIMPLE
+    ON UPDATE CASCADE ON DELETE NO ACTION
+);
+</p>
+</div>

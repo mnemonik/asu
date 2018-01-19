@@ -1,0 +1,143 @@
+#DEFINES += SAMPLE_NAME=\\\"users\\\" 
+#target.path = $$[QT_INSTALL_EXAMPLES]/xmlpatterns/schema
+#INSTALLS += target 
+#wince*: {
+#DEPLOYMENT += addFiles
+#RC_ICONS = images/quickplayer.ico
+
+#QMAKE_PROJECT_NAME = ab_part7
+#build_all:!build_pass {
+#    CONFIG -= build_all
+#    CONFIG += release
+#} 
+
+
+#win32 {
+#    CONFIG(debug, release|debug):DESTDIR = ../debug/styles/
+#    CONFIG(release, release|debug):DESTDIR = ../release/styles/
+#} else {
+#    DESTDIR = ../styles/
+#}
+
+
+#if(!debug_and_release|build_pass):CONFIG(debug, debug|release) {
+#   mac:LIBS = $$member(LIBS, 0) $$member(LIBS, 1)_debug
+#   win32:LIBS = $$member(LIBS, 0) $$member(LIBS, 1)d
+#} 
+
+#SHARED_FOLDER = ../shared
+
+#include($$SHARED_FOLDER/shared.pri) 
+#INCLUDEPATH += $$PWD 
+
+#unix:!mac:!vxworks:!integrity:LIBS += -lm 
+#win32-msvc* {
+#    QMAKE_CXXFLAGS += /Zm500
+#    QMAKE_CFLAGS += /Zm500
+#} 
+#build_all:!build_pass {
+#    CONFIG -= build_all
+#    CONFIG += release
+#} 
+#contains(DEFINES, QT_NO_DRAGANDDROP): SUBDIRS -= puzzle 
+#contains(QT_CONFIG, opengles.) {
+#    contains(QT_CONFIG, angle): \
+#        warning("Qt was built with ANGLE, which provides only OpenGL ES 2.0 on top of DirectX 9.0c")
+#    error("This example requires Qt to be configured with -opengl desktop")
+#} 
+#win32-msvc* {
+#    QMAKE_CXXFLAGS -= -Zm200
+#    QMAKE_CFLAGS -= -Zm200
+#    QMAKE_CXXFLAGS += -Zm500
+#    QMAKE_CFLAGS += -Zm500
+#} 
+#contains(QT_CONFIG, openssl) | contains(QT_CONFIG, openssl-linked) {
+#SUBDIRS +=  \
+#            sslechoserver \
+#            sslechoclient
+#} 
+#Q_NULLPTR
+#QT_FORWARD_DECLARE_CLASS(QWebSocketServer)
+#QT_USE_NAMESPACE
+#//! [processMessage]
+#void ChatServer::processMessage(QString message)
+#{ 
+#}
+#//! [processMessage] 
+
+#qtHaveModule(uitools):!embedded: QT += uitools
+#else: DEFINES += QT_NO_UITOOLS 
+
+
+
+#target.path=$$DESTPATH
+#qmldir.files=$$PWD/qmldir
+#qmldir.path=$$DESTPATH
+#INSTALLS += target qmldir
+#OTHER_FILES += \
+#    plugin.json qmldir
+#copyfile = $$PWD/qmldir
+#copydest = $$DESTDIR
+## On Windows, use backslashes as directory separators
+#win32: {
+#    copyfile ~= s,/,\\,g
+#    copydest ~= s,/,\\,g
+#}
+## Copy the qmldir file to the same folder as the plugin binary
+#QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$copyfile) $$quote($$copydest) $$escape_expand(\\n\\t) 
+
+#DESTDIR = $$OUT_PWD/.. 
+
+#ICON = resources/icon64.png
+#macx: ICON = resources/icon.icns
+#win32: RC_FILE = resources/window.rc 
+
+# Copy the qmldir file to the same folder as the plugin binary
+#QMAKE_POST_LINK += $$QMAKE_COPY $$replace($$list($$quote($$PWD/qmldir) $$DESTDIR), /, $$QMAKE_DIR_SEP) 
+
+#class FrequencyMonitor : public QObject
+#{
+#    Q_OBJECT
+#    Q_DECLARE_PRIVATE(FrequencyMonitor)
+#    Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged) 
+#public:
+#    QString label() const; 
+#signals:
+#    void labelChanged(const QString &value); 
+#public slots:
+#    void setLabel(const QString &value); 
+
+#        QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN 
+
+#    !contains(DEFINES, DISABLE_FFT) {
+#        # Relocate fftreal.framework into spectrum.app bundle
+#        framework_dir = ../spectrum.app/Contents/Frameworks
+#        framework_name = fftreal.framework/Versions/1/fftreal
+#        QMAKE_POST_LINK = \
+#            mkdir -p $${framework_dir} &&\
+#            rm -rf $${framework_dir}/fftreal.framework &&\
+#            cp -R $${fftreal_dir}/fftreal.framework $${framework_dir} &&\
+#            install_name_tool -id @executable_path/../Frameworks/$${framework_name} \
+#                                $${framework_dir}/$${framework_name} &&\
+#            install_name_tool -change $${framework_name} \
+#                                @executable_path/../Frameworks/$${framework_name} \
+#                                ../spectrum.app/Contents/MacOS/spectrum
+#    } 
+
+#TRANSLATIONS  = trollprint_pt.ts
+#OBJECTS_DIR = tmp
+#MOC_DIR = tmp 
+
+#TEMPLATE = subdirs
+#sd = $$files(*)
+#for(d, sd): \
+#    exists($$d/$${d}.pro): \
+#        SUBDIRS += $$d 
+
+#QMAKE_LFLAGS += -Wl,--no-keep-memory
+
+#RC_FILE  = hierarchy.rc
+#DEF_FILE = hierarchy.def 
+
+#QMAKE_CFLAGS = -nologo -Zm200 -Zc:wchar_t 
+#QMAKE_CFLAGS_WARN_ON = -W2

@@ -1,4 +1,6 @@
 #
+ROOT = $${PWD}
+#
 ASU_PRODUCT = Asu
 ASU_SITE = http://172.16.3.40/
 ASU_URL = ftp://user:qwerty@worker.asu/apps.json

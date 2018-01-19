@@ -1,0 +1,31 @@
+/*! \class Test
+    \brief краткий комментарий.
+
+    после пустой строки начинается подробный комментарий.
+*/
+
+\struct - документирует структуру
+\union - документирует объединение
+\enum - документирует перечисление
+\fn - документирует функцию
+\var - документирует переменную
+\def - документирует макрос подстановки #define
+\file - документирует файл
+\namespace - документирует пространство имен.
+\typedef - документирование объявления типа
+\interface - документирование IDL интерфейса
+\package - документирование пакета на языке Java
+\relates
+
+    QFile file("test.tst");
+    if (!file.open(QIODevice::ReadOnly)){ // ReadOnly::WriteOnly
+        return 0;
+    }
+    QDataStream s( &file );
+    s.setFloatingPointPrecision(QDataStream::SinglePrecision);
+    s.setByteOrder(QDataStream::LittleEndian);
+    float a = 0;
+    float b = 0;
+    float c = 0;
+    s >> a >> b >> c;
+    file.close();
